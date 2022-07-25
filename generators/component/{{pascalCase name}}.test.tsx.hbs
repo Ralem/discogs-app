@@ -1,0 +1,10 @@
+import { render, screen } from "@testing-library/react";
+
+import {{pascalCase name}} from "./{{pascalCase name}}";
+
+describe("<{{pascalCase name}} />", () => {
+  it("Renders the component", async () => {
+    render(<{{pascalCase name}} data-testid="{{pascalCase name}}">{{pascalCase name}}</{{pascalCase name}}>);
+    expect(screen.getByTestId("{{pascalCase name}}")).toBeInTheDocument();
+  });
+});
