@@ -1,7 +1,6 @@
 "use strict";
 
 const path = require("path");
-const webpack = require("webpack");
 const { merge: webpackMerge } = require("webpack-merge");
 const {
   CleanWebpackPlugin: webpackCleanPlugin,
@@ -39,9 +38,6 @@ module.exports = webpackMerge(webpackConfigBase, {
     },
   },
   plugins: [
-    new webpack.DefinePlugin({
-      "process.env": "prod",
-    }),
     // remove prev output folder
     new webpackCleanPlugin({
       dry: false,
