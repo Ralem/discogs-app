@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RecordSearchResponse } from "./discorgs.types";
 
 const dcsKey = process.env.DISCOGS_KEY;
 const dcsSecret = process.env.DISCOGS_SECRET;
@@ -16,7 +17,7 @@ export const discogsApi = createApi({
   reducerPath: "discogsApi",
   baseQuery,
   endpoints: builder => ({
-    searchByTerm: builder.query<[unknown], string>({
+    searchByTerm: builder.query<RecordSearchResponse, string>({
       query: name => `database/search?q=${name}&type=release`,
     }),
   }),
