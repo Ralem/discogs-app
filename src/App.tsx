@@ -12,6 +12,7 @@ import {
 } from "./store/slices/search.slice";
 import LoadingState from "./components/LoadingState";
 import NotFoundState from "./components/NotFoundState";
+import ErrorState from "./components/ErrorState";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,8 +44,8 @@ const App = () => {
 
       {isFetching ? (
         <LoadingState />
-      ) : error ? (
-        "Error"
+      ) : error && "data" in error ? (
+        <ErrorState error={error.data as Error} />
       ) : searchResult?.results?.length ? (
         <RecordsLayout>
           {searchResult?.results?.map(record => (
