@@ -10,7 +10,7 @@ export interface ISearchState {
 }
 
 const getInitialState = (): ISearchState => {
-  const prevHistory = JSON.parse(localStorage.getItem(SEARCH_LS_KEY) || "");
+  const prevHistory = JSON.parse(localStorage.getItem(SEARCH_LS_KEY) || "null");
   return {
     history: Array.isArray(prevHistory) ? prevHistory : [],
     searchTerm: "",
