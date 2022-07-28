@@ -2,6 +2,8 @@
 
 A simple app to search and list albums
 
+https://alep.dev/discogs-app/
+
 This Project uses:
 
 Redux Toolkit / Query as state manager library because it provides a good way of making http request and caching them
