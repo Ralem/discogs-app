@@ -2,13 +2,19 @@
 
 A simple app to search and list albums
 
-This Project uses Redux Toolkit / Query as state manager library because it provides a good way of making http request and caching them
+This Project uses:
+
+Redux Toolkit / Query as state manager library because it provides a good way of making http request and caching them
 
 https://redux-toolkit.js.org/rtk-query/overview
 
 TwinMacro (Twailwind + Emotion) as Styling Library
 
 https://github.com/ben-rogerson/twin.macro
+
+PlopJs as generator
+
+https://plopjs.com/documentation/#getting-started
 
 ## Before Running the App
 
