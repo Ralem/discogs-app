@@ -26,7 +26,7 @@ const LoadingState = (props: LoadingStateProps = {}) => {
 };
 
 const Wrapper = styled.div([
-  tw`w-full h-full flex items-center justify-center`,
+  tw`w-full flex-auto flex items-center justify-center`,
 ]);
 
 const BouncingIcons = styled(Icon)([tw`animate-bounce`]);
