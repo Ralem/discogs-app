@@ -4,7 +4,6 @@
     "target": "ESNext",
     "moduleResolution": "node",
     "jsx": "react-jsx",
-    "baseUrl": "./src",
     "outDir": "./dist/",
     "noEmit": true,
     "strict": true,

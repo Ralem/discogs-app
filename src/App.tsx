@@ -13,13 +13,14 @@ import {
 
 const App = () => {
   const dispatch = useDispatch();
-  const [searchByTerm, { data: searchResult, error, isLoading }] =
+  const [searchByTerm, { data: searchResult, error, isFetching }] =
     useLazySearchByTermQuery();
 
   const history = useSelector(getSearchSliceItem("history"));
   const searchTerm = useSelector(getSearchSliceItem("searchTerm"));
 
   const handleSearch = (searchTerm: string) => {
+    if (!searchTerm) return;
     searchByTerm(searchTerm);
     dispatch(addToHistory(searchTerm));
   };
@@ -34,10 +35,11 @@ const App = () => {
           history={history}
           onSearch={handleSearch}
           onChange={handleSearchTermChange}
+          placeholder="Search for albums"
         />
       </Navbar>
       <RecordsLayout>
-        {isLoading
+        {isFetching
           ? "Loading"
           : error
           ? "Error"

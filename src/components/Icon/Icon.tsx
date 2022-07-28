@@ -1,6 +1,7 @@
+import { HTMLAttributes } from "react";
 import tw, { styled } from "twin.macro";
 
-export interface IconProps {
+export interface IconProps extends HTMLAttributes<HTMLOrSVGElement> {
   iconId?: string;
 }
 

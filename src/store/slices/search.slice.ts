@@ -69,6 +69,7 @@ export const getSearchSliceItem =
   (state: RootState): ISearchState[K] =>
     state.search[itemKey];
 
-export const { setIsTest, addToHistory, setSearchTerm } = searchSlice.actions;
+export const { setIsTest, addToHistory, setSearchTerm, deleteFromHistory } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

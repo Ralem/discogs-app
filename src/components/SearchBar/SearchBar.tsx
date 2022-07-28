@@ -1,9 +1,16 @@
 import tw, { styled } from "twin.macro";
-import React, { useLayoutEffect, useRef } from "react";
+import React, { MouseEvent, useLayoutEffect, useRef } from "react";
 import { ChangeEvent, FocusEvent, useState } from "react";
 import { createPortal } from "react-dom";
 import useDebounced from "../../hooks/useDebounce.hook";
 import Input, { iInputProps, iInputRef } from "../Input";
+import HistoryItem from "../HistoryItem";
+import { useDispatch } from "react-redux";
+import {
+  deleteFromHistory,
+  setSearchTerm,
+} from "../../store/slices/search.slice";
+import { onOutsideElementClick } from "../../utils/OpenClose";
 
 export interface SearchBarProps extends iInputProps {
   onSearch?: (term: string) => void;
@@ -17,6 +24,7 @@ const SearchBar = ({
   onSearch,
   ...inputProps
 }: SearchBarProps = {}) => {
+  const dispatch = useDispatch();
   const [isHistoryVisible, setIsHistoryVisible] = useState(false);
   const [historyContainerBoundings, setHistoryContainerBoundings] = useState<
     Partial<DOMRect>
@@ -28,6 +36,7 @@ const SearchBar = ({
   const handleSearch = (searchTerm: string) => {
     onSearch?.(searchTerm);
     inputComponentRef.current?.input?.current?.blur();
+    setIsHistoryVisible(false);
   };
   const debouncedHandleSearch = useDebounced(handleSearch);
 
@@ -41,8 +50,29 @@ const SearchBar = ({
   };
   const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
     inputProps?.onBlur?.(e);
-    if (e.relatedTarget !== historyContainerRef.current)
-      setIsHistoryVisible(false);
+  };
+
+  const handleHistoryItemClick = (term: string) => () => {
+    dispatch(setSearchTerm(term));
+    handleSearch(term);
+  };
+
+  const handleHistoryItemRemoveClick =
+    (term: string) => (event: MouseEvent<HTMLOrSVGElement>) => {
+      event.stopPropagation();
+      dispatch(deleteFromHistory(term));
+    };
+
+  const handleOutsideClick: EventListener = (event: Event) => {
+    if (!event.target || !inputComponentRef.current?.wrapper.current) return;
+
+    onOutsideElementClick(
+      event.target as HTMLElement,
+      inputComponentRef.current?.wrapper.current as HTMLElement,
+      () => {
+        setIsHistoryVisible(false);
+      },
+    );
   };
 
   useLayoutEffect(() => {
@@ -59,7 +89,16 @@ const SearchBar = ({
         top: inputWrapperBoundings.top + inputWrapperBoundings.height,
         width: inputWrapperBoundings.width,
       });
+
+      window.addEventListener("click", handleOutsideClick);
+    } else {
+      window.removeEventListener("click", handleOutsideClick);
     }
+
+    // Cleanup
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
   }, [isHistoryVisible]);
 
   return (
@@ -75,15 +114,21 @@ const SearchBar = ({
       />
       {isHistoryVisible &&
         historyRootEl &&
+        !!history?.length &&
         createPortal(
           <HistoryContainer
             style={historyContainerBoundings}
             ref={historyContainerRef}
           >
             {history?.map(term => (
-              <p tabIndex={0} key={term}>
+              <HistoryItem
+                onClick={handleHistoryItemClick(term)}
+                onRemoveClick={handleHistoryItemRemoveClick(term)}
+                tabIndex={0}
+                key={term}
+              >
                 {term}
-              </p>
+              </HistoryItem>
             ))}
           </HistoryContainer>,
           historyRootEl,
