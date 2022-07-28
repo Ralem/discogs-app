@@ -6,12 +6,14 @@ const SEARCH_LS_KEY = "dgSearchHistory";
 export interface ISearchState {
   history: string[];
   test: boolean;
+  searchTerm: string;
 }
 
 const getInitialState = (): ISearchState => {
-  const prevHistory = JSON.parse(localStorage.getItem(SEARCH_LS_KEY) || "null");
+  const prevHistory = JSON.parse(localStorage.getItem(SEARCH_LS_KEY) || "");
   return {
     history: Array.isArray(prevHistory) ? prevHistory : [],
+    searchTerm: "",
     test: true,
   };
 };
@@ -50,6 +52,10 @@ const reducers = {
       history: [],
     };
   },
+  setSearchTerm: (state: ISearchState, action: PayloadAction<string>) => ({
+    ...state,
+    searchTerm: action.payload,
+  }),
 };
 
 export const searchSlice = createSlice({
@@ -59,9 +65,10 @@ export const searchSlice = createSlice({
 });
 
 export const getSearchSliceItem =
-  (itemKey: keyof ISearchState) => (state: RootState) =>
-    state.search?.[itemKey];
+  <K extends keyof ISearchState>(itemKey: K) =>
+  (state: RootState): ISearchState[K] =>
+    state.search[itemKey];
 
-export const { setIsTest, addToHistory } = searchSlice.actions;
+export const { setIsTest, addToHistory, setSearchTerm } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -1,31 +1,57 @@
-import { FocusEvent, HTMLAttributes, InputHTMLAttributes, useRef } from "react";
+import React, {
+  FocusEvent,
+  forwardRef,
+  HTMLAttributes,
+  InputHTMLAttributes,
+  useImperativeHandle,
+  useRef,
+} from "react";
 import tw, { styled } from "twin.macro";
 
 type iHTMLInputProps = InputHTMLAttributes<HTMLInputElement>;
-
 export interface iInputProps extends iHTMLInputProps {
   wrapperProps?: HTMLAttributes<HTMLDivElement>;
 }
 
-const Input = ({ wrapperProps = {}, ...inputProps }: iInputProps = {}) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+export interface iInputRef {
+  wrapper: { current: HTMLDivElement | null };
+  input: { current: HTMLDivElement | null };
+}
 
-  const handleWrapperFocus = (e: FocusEvent<HTMLDivElement, Element>) => {
-    inputRef?.current?.focus?.();
-    wrapperProps?.onFocus?.(e);
-  };
+const Input = forwardRef<iInputRef, iInputProps>(
+  ({ wrapperProps = {}, ...inputProps }: iInputProps = {}, ref) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const wrapperRef = useRef<HTMLDivElement>(null);
 
-  return (
-    <Wrapper {...wrapperProps} onFocus={handleWrapperFocus} tabIndex={-1}>
-      <StyledInput ref={inputRef} type="text" {...inputProps} />
-    </Wrapper>
-  );
-};
+    const handleWrapperFocus = (e: FocusEvent<HTMLDivElement, Element>) => {
+      inputRef?.current?.focus?.();
+      wrapperProps?.onFocus?.(e);
+    };
 
-const Wrapper = styled.div([tw`p-2 bg-white/50`]);
+    useImperativeHandle(ref, () => ({
+      wrapper: wrapperRef,
+      input: inputRef,
+    }));
+
+    return (
+      <Wrapper
+        ref={wrapperRef}
+        {...wrapperProps}
+        onFocus={handleWrapperFocus}
+        tabIndex={-1}
+      >
+        <StyledInput ref={inputRef} type="text" {...inputProps} />
+      </Wrapper>
+    );
+  },
+);
+
+const Wrapper = styled.div([tw`p-2 bg-white`]);
 
 const StyledInput = styled.input([
   tw`w-full h-full outline-none bg-transparent`,
 ]);
+
+Input.displayName = "Input";
 
 export default Input;
