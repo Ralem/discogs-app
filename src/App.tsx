@@ -10,6 +10,7 @@ import {
   getSearchSliceItem,
   setSearchTerm,
 } from "./store/slices/search.slice";
+import LoadingState from "./components/LoadingState";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -38,19 +39,22 @@ const App = () => {
           placeholder="Search for albums"
         />
       </Navbar>
-      <RecordsLayout>
-        {isFetching
-          ? "Loading"
-          : error
-          ? "Error"
-          : searchResult?.results?.map(record => (
-              <RecordDisplay
-                key={record.id}
-                title={record.title}
-                coverImageSrc={record.thumb}
-              />
-            ))}
-      </RecordsLayout>
+
+      {isFetching ? (
+        <LoadingState />
+      ) : error ? (
+        "Error"
+      ) : (
+        <RecordsLayout>
+          {searchResult?.results?.map(record => (
+            <RecordDisplay
+              key={record.id}
+              title={record.title}
+              coverImageSrc={record.thumb}
+            />
+          ))}
+        </RecordsLayout>
+      )}
     </>
   );
 };

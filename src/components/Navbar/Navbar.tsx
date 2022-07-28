@@ -7,6 +7,6 @@ const Navbar = ({ children, ...wrapperProps }: NavbarProps = {}) => {
   return <Wrapper {...wrapperProps}>{children}</Wrapper>;
 };
 
-const Wrapper = styled.nav([tw`px-1 py-2 bg-black`]);
+const Wrapper = styled.nav([tw`p-2 bg-black`]);
 
 export default Navbar;

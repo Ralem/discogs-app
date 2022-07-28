@@ -1,12 +1,15 @@
 import React from "react"; // make fragment shorthand works
 import { Global } from "@emotion/react";
-import tw, { GlobalStyles as BaseStyles } from "twin.macro";
+import tw, { css, GlobalStyles as BaseStyles } from "twin.macro";
 
-const customStyles = {
-  body: {
-    ...tw`antialiased`,
-  },
-};
+const customStyles = css`
+  html,
+  body,
+  #root {
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 const GlobalStyles = () => (
   <>

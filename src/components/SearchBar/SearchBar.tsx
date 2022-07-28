@@ -44,12 +44,10 @@ const SearchBar = ({
     inputProps?.onChange?.(event);
     debouncedHandleSearch(event.target.value);
   };
+
   const handleInputFocus = (e: FocusEvent<HTMLInputElement>) => {
     inputProps?.onFocus?.(e);
     setIsHistoryVisible(true);
-  };
-  const handleInputBlur = (e: FocusEvent<HTMLInputElement>) => {
-    inputProps?.onBlur?.(e);
   };
 
   const handleHistoryItemClick = (term: string) => () => {
@@ -109,8 +107,6 @@ const SearchBar = ({
         value={searchTerm}
         onFocus={handleInputFocus}
         onChange={handleInputChange}
-        onBlur={handleInputBlur}
-        wrapperProps={{ tw: "border border-pentalog-shark bg-red-400" }}
       />
       {isHistoryVisible &&
         historyRootEl &&
