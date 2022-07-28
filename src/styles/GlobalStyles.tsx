@@ -9,6 +9,10 @@ const customStyles = css`
     width: 100%;
     height: 100%;
   }
+  #root {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const GlobalStyles = () => (

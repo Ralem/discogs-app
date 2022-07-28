@@ -11,6 +11,7 @@ import {
   setSearchTerm,
 } from "./store/slices/search.slice";
 import LoadingState from "./components/LoadingState";
+import NotFoundState from "./components/NotFoundState";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ const App = () => {
         <LoadingState />
       ) : error ? (
         "Error"
-      ) : (
+      ) : searchResult?.results?.length ? (
         <RecordsLayout>
           {searchResult?.results?.map(record => (
             <RecordDisplay
@@ -54,6 +55,8 @@ const App = () => {
             />
           ))}
         </RecordsLayout>
+      ) : (
+        <NotFoundState />
       )}
     </>
   );
