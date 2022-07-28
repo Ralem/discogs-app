@@ -13,12 +13,19 @@ const RecordDisplay = ({
   return (
     <Wrapper className="group" {...wrapperProps}>
       <RecordCover src={coverImageSrc} alt={title} />
+      <RecordTitle>{title}</RecordTitle>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div([tw`relative w-36 h-36 mb-5 shadow-md bg-gray-400`]);
+const Wrapper = styled.div([tw`relative w-36`]);
 
-const RecordCover = styled.img([tw`w-full h-full object-cover`]);
+const RecordCover = styled.img([
+  tw`w-36 h-36 mb-1 object-cover shadow-md bg-gray-400`,
+]);
+
+const RecordTitle = styled.p([
+  tw`max-w-full text-sm font-main font-bold truncate`,
+]);
 
 export default RecordDisplay;
