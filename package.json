@@ -7,7 +7,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "start": "webpack-dev-server --config config/webpack.config.dev.js --hot",
-    "build": "webpack --config config/webpack.config.prod.js"
+    "build": "webpack --config config/webpack.config.prod.js",
+    "plop": "plop"
   },
   "keywords": [],
   "author": "",
