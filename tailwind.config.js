@@ -10,6 +10,9 @@ module.exports = {
           shark: "#19191e",
         },
       },
+      fontFamily: {
+        main: "'Montserrat', sans-serif",
+      },
     },
   },
   variants: {
