@@ -5,7 +5,7 @@ import { discogsApi } from "./services/discogs.api";
 
 export const store = configureStore({
   reducer: {
-    slice: searchSlice,
+    search: searchSlice,
     [discogsApi.reducerPath]: discogsApi.reducer,
   },
 });
