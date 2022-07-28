@@ -11,7 +11,7 @@ const RecordDisplay = ({
   ...wrapperProps
 }: RecordDisplayProps = {}) => {
   return (
-    <Wrapper className="group" {...wrapperProps}>
+    <Wrapper {...wrapperProps}>
       <RecordCover src={coverImageSrc} alt={title} />
       <RecordTitle>{title}</RecordTitle>
     </Wrapper>
