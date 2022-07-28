@@ -11,7 +11,7 @@ const webpackHTMLPlugin = require("html-webpack-plugin");
 const webpackConfigBase = require("./webpack.config.base");
 
 const OUTPUT_DIR = "../dist";
-const PUBLIC_PATH = "/";
+const PUBLIC_PATH = "/discogs-app";
 const STATIC_DIR = "static";
 
 module.exports = webpackMerge(webpackConfigBase, {
